@@ -6,9 +6,10 @@ import { useSettings } from "./useSettings";
 import { useUpdateSetting } from "./useUpdateSetting";
 
 function UpdateSettingsForm() {
+  const { isUpdating, updateSetting } = useUpdateSetting();
+
   const {
     isLoading,
-    _error,
     settings: {
       minBookingLength,
       maxBookingLength,
@@ -16,13 +17,14 @@ function UpdateSettingsForm() {
       maxGuestsPerBooking,
     } = {},
   } = useSettings();
-  const { isUpdating, updateSetting } = useUpdateSetting();
-  if (isLoading) return <Spinner />;
+
   function handleUpdate(e, field) {
     const { value } = e.target;
     if (!value) return;
     updateSetting({ [field]: value });
   }
+
+  if (isLoading) return <Spinner />;
   return (
     <Form>
       <FormRow label="Minimum nights/booking">

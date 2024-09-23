@@ -1,34 +1,40 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
-import { Textarea } from "../../ui/Textarea";
+import Textarea from "../../ui/Textarea";
+import FormRow from "../../ui/FormRow";
+
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
-import FormRow from "./FormRow";
 
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+
   const queryClient = useQueryClient();
+
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
-      toast.success("New Cabin successfully added");
+      toast.success("New cabin successfully created");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       reset();
     },
     onError: (err) => toast.error(err.message),
   });
+
   function onSubmit(data) {
     mutate({ ...data, image: data.image[0] });
-    // console.log({ ...data, image: data.image[0] });
   }
-  function onError(err) {
-    console.log(err);
+
+  function onError(errors) {
+    // console.log(errors);
   }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
@@ -51,13 +57,13 @@ function CreateCabinForm() {
             required: "This field is required",
             min: {
               value: 1,
-              message: "capacity should be at least 1",
+              message: "Capacity should be at least 1",
             },
           })}
         />
       </FormRow>
 
-      <FormRow label="Regular Price" error={errors?.regularPrice?.message}>
+      <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
           type="number"
           id="regularPrice"
@@ -66,7 +72,7 @@ function CreateCabinForm() {
             required: "This field is required",
             min: {
               value: 1,
-              message: "capacity should be at least 1",
+              message: "Capacity should be at least 1",
             },
           })}
         />
@@ -81,21 +87,22 @@ function CreateCabinForm() {
           {...register("discount", {
             required: "This field is required",
             validate: (value) =>
-              value <= Number(getValues().regularPrice) ||
-              "Discount should be less than or equal to regular price",
+              value <= getValues().regularPrice ||
+              "Discount should be less than regular price",
           })}
         />
       </FormRow>
 
       <FormRow
         label="Description for website"
+        disabled={isCreating}
         error={errors?.description?.message}
       >
         <Textarea
           type="number"
-          disabled={isCreating}
           id="description"
           defaultValue=""
+          disabled={isCreating}
           {...register("description", {
             required: "This field is required",
           })}

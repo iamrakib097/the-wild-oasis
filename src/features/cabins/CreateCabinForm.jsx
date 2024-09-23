@@ -11,7 +11,6 @@ import FormRow from "./FormRow";
 
 function CreateCabinForm({ cabinToEdit, onCloseModal }) {
   const { id: editId, ...editValue } = cabinToEdit || {};
-  console.log(cabinToEdit);
   const isEditSession = Boolean(editId);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({

@@ -1,7 +1,5 @@
-import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useOutsideClick } from "../hooks/useOursideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -52,34 +50,11 @@ const Button = styled.button`
   }
 `;
 
-const ModalContext = createContext();
-
-function Modal({ children }) {
-  const [openName, setOpenName] = useState("");
-
-  const close = () => setOpenName("");
-  const open = setOpenName;
-  return (
-    <ModalContext.Provider value={{ openName, close, open }}>
-      {children}
-    </ModalContext.Provider>
-  );
-}
-
-function Open({ children, opens: opensWindowName }) {
-  const { open } = useContext(ModalContext);
-
-  return cloneElement(children, { onClick: () => open(opensWindowName) });
-}
-
-const Window = ({ children, name }) => {
-  const { openName, close } = useContext(ModalContext);
-  const ref = useOutsideClick(close);
-  if (name !== openName) return;
+const Modal = ({ children, onClose }) => {
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
-        <Button onClick={close}>
+      <StyledModal>
+        <Button onClick={onClose}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -95,15 +70,12 @@ const Window = ({ children, name }) => {
             />
           </svg>
         </Button>
-        <div>{cloneElement(children, { onCloseModal: close })}</div>
+        <div>{children}</div>
       </StyledModal>
       ;
     </Overlay>,
     document.body
   );
 };
-
-Modal.Open = Open;
-Modal.Window = Window;
 
 export default Modal;

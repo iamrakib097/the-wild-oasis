@@ -1,4 +1,13 @@
 import styled from "styled-components";
+import Heading from "../../ui/Heading";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 const ChartBox = styled.div`
   /* Box */
@@ -131,19 +140,10 @@ function prepareData(startData, stays) {
   return data;
 }
 
-import React from "react";
-import Heading from "../../ui/Heading";
-import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+function DurationChart({ confirmedStays }) {
+  const startData = startDataLight;
+  const data = prepareData(startData, confirmedStays);
 
-const DurationChart = ({ confirmedStays }) => {
-  const data = prepareData(startDataLight, confirmedStays);
   return (
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>
@@ -167,6 +167,7 @@ const DurationChart = ({ confirmedStays }) => {
               />
             ))}
           </Pie>
+          <Tooltip />
           <Legend
             verticalAlign="middle"
             align="right"
@@ -175,11 +176,10 @@ const DurationChart = ({ confirmedStays }) => {
             iconSize={15}
             iconType="circle"
           />
-          <Tooltip />
         </PieChart>
       </ResponsiveContainer>
     </ChartBox>
   );
-};
+}
 
 export default DurationChart;

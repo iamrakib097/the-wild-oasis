@@ -3,18 +3,12 @@
 Welcome to **The Wild Oasis**, a single-page hotel management system designed to streamline the day-to-day operations of a hotel. This web application allows hotel employees to manage cabins, bookings, guests, and payments efficiently.
 ## Live Website
 
-[The Wild Oasis - Live Site](https://the-wild-oasiss-admin.netlify.app/)
+[https://the-wild-oasiss-admin.netlify.app/](https://the-wild-oasiss-admin.netlify.app/)
 
-## Screenshots
+### Login Credentials:
+- **Email**: admin@example.com
+- **Password**: password
 
-### Dashboard Overview
-![Dashboard](./Screenshot/Dashboard.png)
-
-### Cabin Management
-![Cabin Management](./Screenshot/Cabins.png)
-
-### Booking Table
-![Booking Table](./Screenshot/Bookings.png)
 
 ## Technologies Used
 
@@ -74,9 +68,17 @@ Welcome to **The Wild Oasis**, a single-page hotel management system designed to
    ```
 ## Usage
 Once the server is up and running, you can log in as a hotel employee to manage cabins, bookings, guests, and payments. Access the dashboard for a quick overview of hotel operations and statistics.
-### Login Credentials:
-- **Email**: admin@example.com
-- **Password**: password
+
+## Screenshots
+
+### Dashboard Overview
+![Dashboard](./Screenshot/Dashboard.png)
+
+### Cabin Management
+![Cabin Management](./Screenshot/Cabins.png)
+
+### Booking Table
+![Booking Table](./Screenshot/Bookings.png)
 
 ## Contributing
 Feel free to open issues or pull requests for improvements or new features. Contributions are welcome
